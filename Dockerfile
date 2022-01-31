@@ -36,8 +36,8 @@ RUN groupadd --gid $GROUP_ID $USERNAME && \
         chmod 0440 /etc/sudoers.d/$USERNAME
 
 # Startup scripts
-ENV LANG="en_US.UTF-8"
-ENV PULSE_SERVER /run/pulse/native
+#ENV LANG="en_US.UTF-8"
+#ENV PULSE_SERVER /run/pulse/native
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/profile.d/ros.sh && \
     echo "export QT_X11_NO_MITSHM=1" >> /etc/profile.d/autoware.sh && \
     echo "export LANG=\"en_US.UTF-8\"" >> /etc/profile.d/autoware.sh
