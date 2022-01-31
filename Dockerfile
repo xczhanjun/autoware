@@ -47,13 +47,12 @@ WORKDIR /home/$USERNAME
 COPY . /home/$USERNAME
 RUN  ./setup-dev-env.sh -y universe
 
-
-USER $USERNAME
-
 RUN  mkdir src && vcs import src < autoware.repos
 RUN apt-get -y update && rosdep update && DEBIAN_FRONTEND=noninteractive rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
+
 RUN  . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --event-handlers console_cohesion+ --cmake-args -DCMAKE_BUILD_TYPE=Release
 
+RUN chown -R $USERNAME.$USERNAME /home/$USERNAME
 
 COPY ./entrypoint.sh /autoware_entrypoint.sh
 # hadolint ignore=DL3002
