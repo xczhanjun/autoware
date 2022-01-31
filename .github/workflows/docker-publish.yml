@@ -34,6 +34,8 @@ jobs:
       id-token: write
 
     steps:
+      - name: check free space
+        run: df -h && docker images && docker ps -a
       - name: Checkout repository
         uses: actions/checkout@v2
 
