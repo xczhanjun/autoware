@@ -12,7 +12,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 #
 # hadolint ignore=DL3008,DL3013
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        sudo locales python3-pip 
+       vim htop lsof net-tools iputils-ping  sudo locales python3-pip 
 
 
 #
@@ -51,6 +51,7 @@ RUN  mkdir src && vcs import src < autoware.repos
 RUN apt-get -y update && rosdep update && DEBIAN_FRONTEND=noninteractive rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
 
 RUN  . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --event-handlers console_cohesion+ --cmake-args -DCMAKE_BUILD_TYPE=Release
+RUN cp /root/.bashrc /home/$USERNAME/.bashrc
 
 RUN chown -R $USERNAME.$USERNAME /home/$USERNAME
 
